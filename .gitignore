@@ -1,4 +1,5 @@
 .stack-work/
-*~
+yesod-bulma.cabal
 dist*/
+*~
 client_session_key.aes
