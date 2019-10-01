@@ -9,17 +9,14 @@ module Yesod.Bulma.Paginator
 
 import           Yesod.Paginator.Prelude
 
-import           Yesod.Bulma.Class
 import           Yesod.Bulma.Paginator.Internal
-import           Yesod.Bulma.Utils
 import           Yesod.Core
 import           Yesod.Paginator                as X hiding (ellipsed, simple)
 import           Yesod.Paginator.Pages
 import           Yesod.Paginator.Widgets        (PaginationWidget)
 
-simple :: YesodBulma site => Natural -> PaginationWidget site a
+simple :: Natural -> PaginationWidget site a
 simple elements pages = do
-  addBulmaResource
   updateGetParams <- getUpdateGetParams
 
   let (prevPages, nextPages) = getBalancedPages elements pages
@@ -49,9 +46,8 @@ simple elements pages = do
     |]
 
 -- | Show pages before and after, ellipsis, and first/last
-ellipsed :: YesodBulma site => Natural -> PaginationWidget site a
+ellipsed :: Natural -> PaginationWidget site a
 ellipsed elements pages = do
-  addBulmaResource
   updateGetParams <- getUpdateGetParams
 
   let (prevPages, nextPages) = getBalancedPages elements pages

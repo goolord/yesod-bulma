@@ -26,8 +26,6 @@ import           Data.Text.Encoding.Error (lenientDecode)
 import           Data.Text.Read           (decimal, signed)
 import qualified Text.Email.Validate      as Email
 import           Text.Shakespeare.I18N    (RenderMessage)
-import           Yesod.Bulma.Class
-import           Yesod.Bulma.Utils        (addStylesheet')
 import           Yesod.Core               (HandlerSite)
 import           Yesod.Core.Types
 import           Yesod.Core.Widget        (handlerToWidget, whamlet)
@@ -39,8 +37,7 @@ import           Yesod.Form.Types         (Enctype (..), Field (..))
 
 -- | Creates an input with @type="checkbox"@ for selecting multiple options.
 bulmaCheckboxesFieldList
-  :: ( YesodBulma site
-     , Eq a
+  :: ( Eq a
      , RenderMessage site msg
      )
   => [(msg, a)] -> Field (HandlerFor site) [a]
@@ -48,8 +45,7 @@ bulmaCheckboxesFieldList = bulmaCheckboxesField . optionsPairs
 
 -- | Creates an input with @type="checkbox"@ for selecting multiple options.
 bulmaCheckboxesField
-  :: ( YesodBulma site
-     , Eq a
+  :: ( Eq a
      )
   => HandlerFor site (OptionList a) -> Field (HandlerFor site) [a]
 bulmaCheckboxesField ioptlist = (bulmaMultiSelectField ioptlist)
@@ -58,7 +54,6 @@ bulmaCheckboxesField ioptlist = (bulmaMultiSelectField ioptlist)
       let
         optselected (Left _) _       = False
         optselected (Right vals) opt = optionInternalValue opt `elem` vals
-      addStylesheet' urlBulmaExCheckRadio
       [whamlet| $newline never
         <div ##{theId}>
           $forall opt <- opts
@@ -181,12 +176,10 @@ bulmaTextareaField = Field
 --   Note that this makes the field always optional.
 --
 bulmaCheckBoxField
-  :: YesodBulma site
-  => Text -> Field (HandlerFor site) Bool
+  :: Text -> Field (HandlerFor site) Bool
 bulmaCheckBoxField msg = Field
   { fieldParse = \e _ -> return $ checkBoxParser e
   , fieldView  = \theId name attrs val _ -> do
-      addStylesheet' urlBulmaExCheckRadio
       [whamlet| $newline never
         <input .is-checkradio id=#{theId} *{attrs} type=checkbox name=#{name} value=yes :showVal id val:checked>
         <label for=#{theId}>#{msg}
@@ -203,8 +196,7 @@ bulmaCheckBoxField msg = Field
 
 -- | Creates an input with @type="radio"@ for selecting one option.
 bulmaRadioFieldList
-  :: ( YesodBulma site
-     , Eq a
+  :: ( Eq a
      , RenderMessage site FormMessage
      , RenderMessage site msg
      )
@@ -213,25 +205,21 @@ bulmaRadioFieldList = bulmaRadioField . optionsPairs
 
 -- | Creates an input with @type="radio"@ for selecting one option.
 bulmaRadioField
-  :: ( YesodBulma site
-     , Eq a
+  :: ( Eq a
      , RenderMessage site FormMessage
      )
   => HandlerFor site (OptionList a) -> Field (HandlerFor site) a
 bulmaRadioField = selectFieldHelper
   (\theId _name _attrs inside -> do
-    addStylesheet' urlBulmaExCheckRadio
     [whamlet| $newline never
       <div ##{theId}>^{inside}
     |])
   (\theId name isSel -> do
-    addStylesheet' urlBulmaExCheckRadio
     [whamlet| $newline never
       <input .is-checkradio id=#{theId}-none type=radio name=#{name} value=none :isSel:checked>
       <labelfor=#{theId}-none>_{MsgSelectNone}
     |])
   (\theId name attrs value isSel text -> do
-    addStylesheet' urlBulmaExCheckRadio
     [whamlet| $newline never
       <input .is-checkradio id=#{theId}-#{value} type=radio name=#{name} value=#{value} :isSel:checked *{attrs}>
       <label for=#{theId}-#{value}>#{text}

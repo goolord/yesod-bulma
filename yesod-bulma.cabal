@@ -30,12 +30,10 @@ source-repository head
 library
   exposed-modules:
       Yesod.Bulma
-      Yesod.Bulma.Class
       Yesod.Bulma.Form
       Yesod.Bulma.Form.Fields
       Yesod.Bulma.Paginator
       Yesod.Bulma.Paginator.Internal
-      Yesod.Bulma.Utils
   other-modules:
       Paths_yesod_bulma
   hs-source-dirs:

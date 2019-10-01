@@ -15,9 +15,7 @@ module Yesod.Bulma.Form
 import           Data.Bifunctor
 import           Data.Text               (Text)
 import           Text.Shakespeare.I18N
-import           Yesod.Bulma.Class
 import           Yesod.Bulma.Form.Fields
-import           Yesod.Bulma.Utils
 import           Yesod.Core
 import           Yesod.Form.Functions
 import           Yesod.Form.Types
@@ -31,13 +29,12 @@ data BulmaSubmit msg =
     , _bulmaAttrs   :: [(Text, Text)] -- ^ Attributes added to the @\<button>@.
     } deriving Show
 
-renderBulma :: YesodBulma site => BulmaFormLayout -> FormRender (HandlerFor site) a
+renderBulma :: BulmaFormLayout -> FormRender (HandlerFor site) a
 renderBulma formLayout aform fragment = do
   (res, views') <- aFormToForm aform
   let
     views = views' []
     widget = do
-      addBulmaResource
       _cancelId <- newIdent
       [whamlet| $newline never
         #{fragment}
