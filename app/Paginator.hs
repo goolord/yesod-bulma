@@ -13,7 +13,6 @@ import           Yesod.Bulma
 data App = App
 
 instance Yesod App
-instance YesodBulma App
 
 mkYesod "App" [parseRoutes|
 / RootR GET

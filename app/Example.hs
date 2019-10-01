@@ -18,7 +18,6 @@ mkYesod "App" [parseRoutes|
 |]
 
 instance Yesod App
-instance YesodBulma App
 
 instance RenderMessage App FormMessage where
   renderMessage _ _ = defaultFormMessage
